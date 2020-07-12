@@ -1,3 +1,5 @@
+import { GetStaticProps } from 'next'
+
 function Users({users}) {
     return (
     <>
@@ -11,7 +13,7 @@ function Users({users}) {
     </>)
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
     const res = await fetch('http://localhost:3000/api/user')
     const users = await res.json()
     return {
