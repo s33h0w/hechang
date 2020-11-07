@@ -10,9 +10,8 @@ function getBaseURL(): string {
   }
   return process.env.HOST
 }
-export const getServerSideProps: GetServerSideProps<{
-  name: string
-}> = async () => {
+
+export const getServerSideProps: GetServerSideProps = async () => {
   const url = new URL('/api/hello', getBaseURL())
   const res = await fetch(url.href)
   const hello = await res.json()
