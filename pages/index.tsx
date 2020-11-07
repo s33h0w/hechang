@@ -7,7 +7,6 @@ export default function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -47,7 +46,6 @@ export default function Home() {
           </a>
         </div>
       </main>
-
       <footer>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -58,7 +56,6 @@ export default function Home() {
           <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
-
       <style jsx>{`
         .container {
           min-height: 100vh;
@@ -189,7 +186,6 @@ export default function Home() {
           }
         }
       `}</style>
-
       <style jsx global>{`
         html,
         body {

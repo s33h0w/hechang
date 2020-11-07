@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .ts,tsx pages/",
-    "format": "eslint --fix --ext .ts,tsx pages/ && prettier --write pages/"
+    "format": "eslint . --fix --ext .ts,tsx && prettier . --write"
   },
   "dependencies": {
     "@prisma/client": "2.10.1",
