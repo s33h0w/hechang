@@ -1,14 +1,14 @@
-import { PrismaClient } from '@prisma/client'
-import { NextApiRequest, NextApiResponse } from 'next'
+import {PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-async function getAllUsers() {
-  const allUsers = await prisma.user.findMany()
-  return allUsers
-}
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const users = await getAllUsers()
-  res.status(200).json(users)
+// POST /api/user
+// Required fields in body: name, email
+export default async function handle(req, res) {
+  const result = await prisma.user.create({
+    data: {
+      ...req.body,
+    },
+  })
+  res.json(result)
 }

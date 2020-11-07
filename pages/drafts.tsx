@@ -5,16 +5,16 @@ import Post, {PostProps} from '../components/Post'
 import getURL from '../helper/getURL'
 
 type Props = {
-  feed: PostProps[]
+  drafts: PostProps[]
 }
 
-const Blog: React.FC<Props> = (props) => {
+const Drafts: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page">
-        <h1>My Blog</h1>
+        <h1>Drafts</h1>
         <main>
-          {props.feed.map((post) => (
+          {props.drafts.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -40,11 +40,11 @@ const Blog: React.FC<Props> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(getURL('feed'))
-  const feed = await res.json()
+  const res = await fetch(getURL('drafts'))
+  const drafts = await res.json()
   return {
-    props: {feed},
+    props: {drafts},
   }
 }
 
-export default Blog
+export default Drafts
