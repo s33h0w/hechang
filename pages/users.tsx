@@ -14,8 +14,16 @@ function Users({ users }: { users: any }) {
   )
 }
 
+function getBaseURL(): string {
+  if (process.env.ENV === 'production') {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return `http://localhost:3000`;
+}
+
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:3000/api/user')
+  const url = new URL('/api/user', getBaseURL())
+  const res = await fetch(url.href)
   const users = await res.json()
   return {
     props: {

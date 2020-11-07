@@ -4,8 +4,16 @@ function HelloWorld({ name }: { name: any }) {
   return <div>Hello, {name}</div>
 }
 
+function getBaseURL(): string {
+  if (process.env.ENV === 'production') {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return `http://localhost:3000`;
+}
+
 export const getStaticProps: GetStaticProps<{ name: any }> = async () => {
-  const res = await fetch('http://localhost:3000/api/hello')
+  const url = new URL('/api/hello', getBaseURL())
+  const res = await fetch(url.href)
   const hello = await res.json()
   return {
     props: {
