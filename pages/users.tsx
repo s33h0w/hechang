@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 
 function Users({ users }: { users: any }) {
   return (
@@ -18,10 +18,10 @@ function getBaseURL(): string {
   if (process.env.ENV === 'production') {
     return `https://${process.env.VERCEL_URL}`
   }
-  return `http://localhost:3000`;
+  return process.env.HOST
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const url = new URL('/api/user', getBaseURL())
   const res = await fetch(url.href)
   const users = await res.json()
