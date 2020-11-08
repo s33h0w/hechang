@@ -17,7 +17,7 @@ async function destroy(id: number): Promise<void> {
   await fetch(getURL(`post${id}`), {
     method: 'DELETE',
   })
-  Router.push('/')
+  await Router.push('/')
 }
 
 const Post: React.FC<PostProps> = (props) => {
