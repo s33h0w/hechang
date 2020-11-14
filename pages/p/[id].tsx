@@ -14,7 +14,7 @@ async function publish(id: number): Promise<void> {
 }
 
 async function destroy(id: number): Promise<void> {
-  await fetch(getURL(`post${id}`), {
+  await fetch(getURL(`post/${id}`), {
     method: 'DELETE',
   })
   await Router.push('/')
