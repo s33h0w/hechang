@@ -1,10 +1,9 @@
 import React from 'react'
-import {GetServerSideProps} from 'next'
 import ReactMarkdown from 'react-markdown'
-import Router from 'next/router'
+import Router, {useRouter} from 'next/router'
+import useSWR from 'swr'
 import Layout from '../../components/Layout'
 import {PostProps} from '../../components/Post'
-import {getPost} from '../api/post/[id]'
 import fetchApi from '../../utils/fetch'
 
 async function publish(id: number): Promise<void> {
@@ -21,22 +20,21 @@ async function destroy(id: number): Promise<void> {
   await Router.push('/')
 }
 
-const Post: React.FC<PostProps> = (props) => {
-  let title = props.title
-  if (!props.published) {
-    title = `${title} (Draft)`
-  }
+const Post: React.FC<PostProps> = () => {
+  const router = useRouter()
+  const {id} = router.query
+  const {data: post} = useSWR<PostProps>(id ? `/api/post/${id}` : null)
 
   return (
     <Layout>
       <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || 'Unknown author'}</p>
-        <ReactMarkdown source={props.content} />
-        {!props.published && (
-          <button onClick={() => publish(props.id)}>Publish</button>
+        <h2>{post?.title + (post?.published ? '' : '(Draft)')}</h2>
+        <p>By {post?.author?.name || 'Unknown author'}</p>
+        <ReactMarkdown source={post?.content} />
+        {!post?.published && (
+          <button onClick={() => publish(post?.id)}>Publish</button>
         )}
-        <button onClick={() => destroy(props.id)}>Delete</button>
+        <button onClick={() => destroy(post?.id)}>Delete</button>
       </div>
       <style jsx>{`
         .page {
@@ -61,11 +59,6 @@ const Post: React.FC<PostProps> = (props) => {
       `}</style>
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const post = await getPost(context.params.id as string)
-  return {props: {...post}}
 }
 
 export default Post

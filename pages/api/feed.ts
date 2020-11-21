@@ -16,6 +16,6 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const posts = getFeeds()
+  const posts = await getFeeds()
   res.status(200).json(posts)
 }

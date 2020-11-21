@@ -1,20 +1,21 @@
 import React from 'react'
-import {GetServerSideProps} from 'next'
+import useSWR from 'swr'
 import Layout from '../components/Layout'
 import Post, {PostProps} from '../components/Post'
-import {getDrafts} from './api/drafts'
 
 type Props = {
   drafts: PostProps[]
 }
 
-const Drafts: React.FC<Props> = (props) => {
+const Drafts: React.FC<Props> = () => {
+  const {data} = useSWR<PostProps[]>('/api/drafts')
+
   return (
     <Layout>
       <div className="page">
         <h1>Drafts</h1>
         <main>
-          {props.drafts.map((post) => (
+          {data?.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -37,13 +38,6 @@ const Drafts: React.FC<Props> = (props) => {
       `}</style>
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const drafts = await getDrafts()
-  return {
-    props: {drafts},
-  }
 }
 
 export default Drafts

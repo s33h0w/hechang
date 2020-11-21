@@ -1,20 +1,20 @@
 import React from 'react'
-import {GetServerSideProps} from 'next'
+import useSWR from 'swr'
 import Layout from '../components/Layout'
 import Post, {PostProps} from '../components/Post'
-import {getFeeds} from './api/feed'
 
 type Props = {
   feed: PostProps[]
 }
 
-const Blog: React.FC<Props> = (props) => {
+const Blog: React.FC<Props> = () => {
+  const {data} = useSWR<PostProps[]>('/api/feed')
   return (
     <Layout>
       <div className="page">
         <h1>My Blog</h1>
         <main>
-          {props.feed.map((post) => (
+          {data?.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -37,13 +37,6 @@ const Blog: React.FC<Props> = (props) => {
       `}</style>
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const feed = await getFeeds()
-  return {
-    props: {feed},
-  }
 }
 
 export default Blog
