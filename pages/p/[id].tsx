@@ -1,21 +1,21 @@
 import React from 'react'
 import {GetServerSideProps} from 'next'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../../components/Layout'
 import Router from 'next/router'
+import Layout from '../../components/Layout'
 import {PostProps} from '../../components/Post'
-import getURL from '../../helper/getURL'
 import {getPost} from '../api/post/[id]'
+import fetchApi from '../../utils/fetch'
 
 async function publish(id: number): Promise<void> {
-  await fetch(getURL(`publish/${id}`), {
+  await fetchApi(`publish/${id}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
 
 async function destroy(id: number): Promise<void> {
-  await fetch(getURL(`post/${id}`), {
+  await fetchApi(`post/${id}`, {
     method: 'DELETE',
   })
   await Router.push('/')
