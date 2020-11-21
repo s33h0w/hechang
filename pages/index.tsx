@@ -2,7 +2,7 @@ import React from 'react'
 import {GetServerSideProps} from 'next'
 import Layout from '../components/Layout'
 import Post, {PostProps} from '../components/Post'
-import getURL from '../helper/getURL'
+import {getFeeds} from './api/feed'
 
 type Props = {
   feed: PostProps[]
@@ -40,8 +40,7 @@ const Blog: React.FC<Props> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(getURL('feed'))
-  const feed = await res.json()
+  const feed = await getFeeds()
   return {
     props: {feed},
   }

@@ -5,6 +5,7 @@ import Layout from '../../components/Layout'
 import Router from 'next/router'
 import {PostProps} from '../../components/Post'
 import getURL from '../../helper/getURL'
+import {getPost} from '../api/post/[id]'
 
 async function publish(id: number): Promise<void> {
   await fetch(getURL(`publish/${id}`), {
@@ -63,9 +64,8 @@ const Post: React.FC<PostProps> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(getURL(`post/${context.params.id}`))
-  const data = await res.json()
-  return {props: {...data}}
+  const post = await getPost(context.params.id as string)
+  return {props: {...post}}
 }
 
 export default Post

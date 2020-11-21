@@ -2,7 +2,7 @@ import React from 'react'
 import {GetServerSideProps} from 'next'
 import Layout from '../components/Layout'
 import Post, {PostProps} from '../components/Post'
-import getURL from '../helper/getURL'
+import {getDrafts} from './api/drafts'
 
 type Props = {
   drafts: PostProps[]
@@ -40,8 +40,7 @@ const Drafts: React.FC<Props> = (props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(getURL('drafts'))
-  const drafts = await res.json()
+  const drafts = await getDrafts()
   return {
     props: {drafts},
   }
