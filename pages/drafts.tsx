@@ -1,8 +1,8 @@
 import {Post as PostType, User} from '@prisma/client'
 import React from 'react'
 import useSWR from 'swr'
-import Layout from '../components/Layout'
-import Post, {PostProps} from '../components/Post'
+import Layout from 'components/Layout'
+import Post, {PostProps} from 'components/Post'
 
 type Props = {
   drafts: PostProps[]

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Router from 'next/router'
-import Layout from '../components/Layout'
-import fetchApi from '../utils/fetch'
+import Layout from 'components/Layout'
+import fetchApi from 'utils/fetch'
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState('')

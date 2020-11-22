@@ -3,9 +3,9 @@ import ReactMarkdown from 'react-markdown'
 import Router, {useRouter} from 'next/router'
 import useSWR from 'swr'
 import {Post as PostType, User} from '@prisma/client'
-import Layout from '../../components/Layout'
-import {PostProps} from '../../components/Post'
-import fetchApi from '../../utils/fetch'
+import Layout from 'components/Layout'
+import {PostProps} from 'components/Post'
+import fetchApi from 'utils/fetch'
 
 async function publish(id: number): Promise<void> {
   await fetchApi(`publish/${id}`, {

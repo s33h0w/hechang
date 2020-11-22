@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import Layout from '../components/Layout'
 import Router from 'next/router'
-import fetchApi from '../utils/fetch'
+import Layout from 'components/Layout'
+import fetchApi from 'utils/fetch'
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState('')
