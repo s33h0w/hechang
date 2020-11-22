@@ -1,17 +1,17 @@
-import {Post as PostType, User} from '@prisma/client'
 import React from 'react'
-import useSWR from 'swr'
 import Layout from 'components/Layout'
 import Post from 'components/Post'
+import {useFeed} from 'services/feed'
 
 const Blog: React.FC = () => {
-  const {data} = useSWR<(PostType & {author: User})[]>('/api/feed')
+  const {feed} = useFeed()
+
   return (
     <Layout>
       <div className="page">
         <h1>My Blog</h1>
         <main>
-          {data?.map((post) => (
+          {feed?.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>

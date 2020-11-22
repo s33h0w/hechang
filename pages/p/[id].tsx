@@ -5,19 +5,15 @@ import useSWR from 'swr'
 import {Post as PostType, User} from '@prisma/client'
 import Layout from 'components/Layout'
 import {PostProps} from 'components/Post'
-import fetchApi from 'utils/fetch'
+import {deletePost, publishPost} from 'services/post'
 
 async function publish(id: number): Promise<void> {
-  await fetchApi(`publish/${id}`, {
-    method: 'PUT',
-  })
+  await publishPost(id)
   await Router.push('/')
 }
 
 async function destroy(id: number): Promise<void> {
-  await fetchApi(`post/${id}`, {
-    method: 'DELETE',
-  })
+  await deletePost(id)
   await Router.push('/')
 }
 

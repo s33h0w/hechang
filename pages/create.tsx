@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Router from 'next/router'
 import Layout from 'components/Layout'
-import fetchApi from 'utils/fetch'
+import {createPost} from 'services/post'
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState('')
@@ -11,12 +11,7 @@ const Draft: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      const body = {title, content, authorEmail}
-      await fetchApi('post', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body),
-      })
+      await createPost({title, content, authorEmail})
       await Router.push('/drafts')
     } catch (error) {
       console.error(error)

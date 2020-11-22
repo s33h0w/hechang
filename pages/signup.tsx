@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Router from 'next/router'
 import Layout from 'components/Layout'
-import fetchApi from 'utils/fetch'
+import {createUser} from 'services/user'
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState('')
@@ -10,12 +10,7 @@ const SignUp: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      const body = {name, email}
-      await fetchApi('user', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body),
-      })
+      await createUser({name, email})
       Router.push('/')
     } catch (error) {
       console.error(error)
