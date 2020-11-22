@@ -1,3 +1,4 @@
+import {Post as PostType, User} from '@prisma/client'
 import React from 'react'
 import useSWR from 'swr'
 import Layout from '../components/Layout'
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const Drafts: React.FC<Props> = () => {
-  const {data} = useSWR<PostProps[]>('/api/drafts')
+  const {data} = useSWR<(PostType & {author: User})[]>('/api/drafts')
 
   return (
     <Layout>

@@ -1,11 +1,11 @@
-import {PrismaClient} from '@prisma/client'
+import {Post, PrismaClient, User} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 
 const prisma = new PrismaClient()
 
 export default async function handle(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<(Post & {author: User}) | Post>
 ) {
   const postId = req.query.id as string
 
@@ -24,17 +24,15 @@ export default async function handle(
 
 // GET /api/post/:id
 export async function getPost(postId: string) {
-  const post = await prisma.post.findOne({
+  return await prisma.post.findOne({
     where: {id: Number(postId)},
     include: {author: true},
   })
-  return JSON.parse(JSON.stringify(post))
 }
 
 // DELETE /api/post/:id
 export async function deletePost(postId: string) {
-  const post = await prisma.post.delete({
+  return await prisma.post.delete({
     where: {id: Number(postId)},
   })
-  return JSON.parse(JSON.stringify(post))
 }

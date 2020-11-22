@@ -1,14 +1,11 @@
+import {Post as PostType, User} from '@prisma/client'
 import React from 'react'
 import useSWR from 'swr'
 import Layout from '../components/Layout'
-import Post, {PostProps} from '../components/Post'
+import Post from '../components/Post'
 
-type Props = {
-  feed: PostProps[]
-}
-
-const Blog: React.FC<Props> = () => {
-  const {data} = useSWR<PostProps[]>('/api/feed')
+const Blog: React.FC = () => {
+  const {data} = useSWR<(PostType & {author: User})[]>('/api/feed')
   return (
     <Layout>
       <div className="page">

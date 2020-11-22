@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client'
+import {Post, PrismaClient} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 
 const prisma = new PrismaClient()
@@ -17,12 +17,12 @@ export async function filterPosts(searchString: string) {
       ],
     },
   })
-  return posts.map((item) => JSON.parse(JSON.stringify(item)))
+  return posts
 }
 
 export default async function handle(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<Post[]>
 ) {
   const {searchString} = req.query
   const resultPosts = await filterPosts(searchString as string)

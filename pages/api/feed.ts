@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client'
+import {Post, PrismaClient, User} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 
 const prisma = new PrismaClient()
@@ -9,12 +9,12 @@ export async function getFeeds() {
     include: {author: true},
   })
 
-  return JSON.parse(JSON.stringify(feeds))
+  return feeds
 }
 
 export default async function handle(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<(Post & {author: User})[]>
 ) {
   const posts = await getFeeds()
   res.status(200).json(posts)

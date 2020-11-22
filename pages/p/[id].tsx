@@ -2,6 +2,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import Router, {useRouter} from 'next/router'
 import useSWR from 'swr'
+import {Post as PostType, User} from '@prisma/client'
 import Layout from '../../components/Layout'
 import {PostProps} from '../../components/Post'
 import fetchApi from '../../utils/fetch'
@@ -23,7 +24,9 @@ async function destroy(id: number): Promise<void> {
 const Post: React.FC<PostProps> = () => {
   const router = useRouter()
   const {id} = router.query
-  const {data: post} = useSWR<PostProps>(id ? `/api/post/${id}` : null)
+  const {data: post} = useSWR<PostType & {author: User}>(
+    id ? `/api/post/${id}` : null
+  )
 
   return (
     <Layout>
