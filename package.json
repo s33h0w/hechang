@@ -6,8 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext .ts,tsx pages/",
     "format": "eslint . --fix --ext .ts,tsx && prettier . --write",
+    "test": "yarn test:lint && yarn test:jest",
+    "test:lint": "eslint . --ext .ts,tsx",
+    "test:jest": "yarn jest",
+    "test:watch": "yarn jest --watch",
     "prisma:generate": "prisma generate",
     "prisma:introspect": "prisma introspect",
     "prisma:studio": "prisma studio",
@@ -23,23 +26,29 @@
   },
   "devDependencies": {
     "@prisma/cli": "2.10.2",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
     "@types/node": "^14.0.22",
     "@types/react": "^16.9.43",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
+    "babel-jest": "^26.6.3",
     "cypress": "^5.6.0",
     "cz-conventional-changelog": "3.2.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.7",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.5",
+    "jest": "^26.6.3",
     "prettier": "^2.0.5",
+    "ts-node": "^9.0.0",
     "typescript": "^3.9.6"
   },
   "config": {
@@ -50,7 +59,7 @@
   "husky": {
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "pre-commit": "yarn run format"
+      "pre-commit": "yarn format && yarn test"
     }
   }
 }
